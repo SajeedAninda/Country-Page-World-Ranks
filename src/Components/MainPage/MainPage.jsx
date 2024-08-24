@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import topImg from "../../assets/hero-image-wr.jpg";
-import logo from "../../assets/Logo.svg"
-import searchLogo from "../../assets/Search.svg"
+import logo from "../../assets/Logo.svg";
+import searchLogo from "../../assets/Search.svg";
 
 const MainPage = () => {
+    const [selectedRegions, setSelectedRegions] = useState({});
+
+    const regions = ["Americas", "Antarctica", "Africa", "Asia", "Europe", "Oceania"];
+
+    const handleRegionClick = (region) => {
+        setSelectedRegions((prev) => ({
+            ...prev,
+            [region]: !prev[region],
+        }));
+    };
+
     return (
         <div>
             <div className='upperImageDiv relative z-0'>
@@ -38,18 +49,21 @@ const MainPage = () => {
                                 </select>
                             </div>
 
-                            <div className='mt-8'>
+                            <div className='mt-8 regionDiv'>
                                 <p className='text-[#6C727F] font-semibold text-[12px]'>
                                     Region
                                 </p>
 
-                                <div className='flex flex-wrap w-full mt-4 gap-3'>
-                                    <button className='text-[#6C727F] px-3 py-1 rounded-lg hover:bg-[#282B30] hover:text-[#D2D5DA]'>Americas</button>
-                                    <button className='text-[#6C727F] px-3 py-1 rounded-lg hover:bg-[#282B30] hover:text-[#D2D5DA]'>Antarctica</button>
-                                    <button className='text-[#6C727F] px-3 py-1 rounded-lg hover:bg-[#282B30] hover:text-[#D2D5DA]'>Africa</button>
-                                    <button className='text-[#6C727F] px-3 py-1 rounded-lg hover:bg-[#282B30] hover:text-[#D2D5DA]'>Asia</button>
-                                    <button className='text-[#6C727F] px-3 py-1 rounded-lg hover:bg-[#282B30] hover:text-[#D2D5DA]'>Europe</button>
-                                    <button className='text-[#6C727F] px-3 py-1 rounded-lg hover:bg-[#282B30] hover:text-[#D2D5DA]'>Oceania</button>
+                                <div className='regionButtons flex flex-wrap w-full mt-4 gap-3'>
+                                    {regions.map((region) => (
+                                        <button
+                                            key={region}
+                                            className={`px-3 py-1 rounded-lg text-[#6C727F] ${selectedRegions[region] ? 'bg-[#282B30] text-[#D2D5DA]' : 'hover:bg-[#282B30] hover:text-[#D2D5DA]'}`}
+                                            onClick={() => handleRegionClick(region)}
+                                        >
+                                            {region}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
                         </div>
