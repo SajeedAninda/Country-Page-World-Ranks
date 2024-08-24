@@ -1,8 +1,10 @@
+import MainPage from "./Components/MainPage/MainPage";
+
 function App() {
 
   return (
     <>
-    Hi
+      <MainPage></MainPage>
     </>
   )
 }
