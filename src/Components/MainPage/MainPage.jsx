@@ -66,6 +66,41 @@ const MainPage = () => {
                                     ))}
                                 </div>
                             </div>
+
+                            <div className='statusDiv mt-8'>
+                                <div className='checkBoxDiv'>
+                                    <div>
+                                        <div className='flex items-center'>
+                                            <input
+                                                type="checkbox"
+                                                id="unMember"
+                                                className="appearance-none h-5 w-5 border border-[#6C727F] rounded-sm bg-[#1C1D1F] checked:bg-[#4E80EE] focus:outline-none transition duration-200 cursor-pointer"
+                                            />
+                                            <label
+                                                htmlFor="unMember"
+                                                className="text-[#D2D5DA] text-[14px] font-semibold pl-3 cursor-pointer"
+                                            >
+                                                Member of United Nations
+                                            </label>
+                                        </div>
+
+                                        <div className='flex items-center mt-2'>
+                                            <input
+                                                type="checkbox"
+                                                id="unMember"
+                                                className="appearance-none h-5 w-5 border border-[#6C727F] rounded-sm bg-[#1C1D1F] checked:bg-[#4E80EE] focus:outline-none transition duration-200 cursor-pointer"
+                                            />
+                                            <label
+                                                htmlFor="unMember"
+                                                className="text-[#D2D5DA] text-[14px] font-semibold pl-3 cursor-pointer"
+                                            >
+                                                Independent
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
