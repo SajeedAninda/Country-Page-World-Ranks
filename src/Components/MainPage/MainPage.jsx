@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import topImg from "../../assets/hero-image-wr.jpg";
 import logo from "../../assets/Logo.svg";
 import searchLogo from "../../assets/Search.svg";
-import chinaFlag from "../../assets/cn.svg"
 
 const MainPage = () => {
     const initialRegions = {
@@ -15,6 +14,14 @@ const MainPage = () => {
     };
 
     const [selectedRegions, setSelectedRegions] = useState(initialRegions);
+    const [countries, setCountries] = useState([]);
+
+    useEffect(() => {
+        fetch('https://restcountries.com/v3.1/all')
+            .then(response => response.json())
+            .then(data => setCountries(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
 
     const regions = Object.keys(initialRegions);
 
@@ -32,16 +39,15 @@ const MainPage = () => {
                 <img className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ' src={logo} alt="Logo" />
             </div>
 
-            <div className='lowerDiv h-screen bg-[#1C1D1F] relative'>
-                <div className="innerDiv w-[92%] mx-auto h-[90vh] rounded-xl bg-[#1C1D1F] absolute -top-16 left-1/2 transform -translate-x-1/2 p-10 border border-[#282b30]">
+            <div className='lowerDiv min-h-[100vh] bg-[#1C1D1F] flex flex-col'>
+                <div className="innerDiv w-[92%] mx-auto h-fit rounded-xl bg-[#1C1D1F] relative p-10 border border-[#282b30] mt-[-5rem]">
                     <div className='text&inputBox flex justify-between items-center'>
                         <p className='text-[#6C727F] font-semibold text-[16px]'>
-                            Found 223 Countries
+                            Found {countries.length} Countries
                         </p>
 
                         <div className='w-[25%] searchBox relative'>
                             <input className='w-full pl-10 pr-2 py-2 rounded-lg text-[#6C727F] bg-[#282b30] placeholder:text-[12px] placeholder:text-[#6C727F] placeholder:font-semibold' placeholder='Search by Name, Region or Subregion' type="text" />
-
                             <img className='absolute top-2 left-3' src={searchLogo} alt="Search Icon" />
                         </div>
                     </div>
@@ -110,9 +116,7 @@ const MainPage = () => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
 
                         <div className="countryBox w-[78%]">
                             <div className='tableHeader grid items-center grid-cols-4'>
@@ -140,28 +144,30 @@ const MainPage = () => {
 
                             <hr className='my-6 border border-[#3d4149]' />
 
-                            <div className='countryRow grid items-center grid-cols-4 mt-6'>
-                                <div className='pl-6'>
-                                    <div>
-                                        <img className='w-[48px] rounded-md object-contain' src={chinaFlag} alt="" />
+                            {countries.map((country) => (
+                                <div key={country.cca3} className='countryRow grid items-center grid-cols-4 mt-6'>
+                                    <div className='pl-6'>
+                                        <div>
+                                            <img className='w-[48px] rounded-md object-contain' src={country.flags.svg} alt={`${country.name.common} flag`} />
+                                        </div>
+                                    </div>
+                                    <div className=''>
+                                        <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                            {country.name.common}
+                                        </p>
+                                    </div>
+                                    <div className=''>
+                                        <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                            {country.population.toLocaleString()}
+                                        </p>
+                                    </div>
+                                    <div className=''>
+                                        <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                            {country.area.toLocaleString()}
+                                        </p>
                                     </div>
                                 </div>
-                                <div className=''>
-                                    <p className='text-[14px] font-medium text-[#D2D5DA]'>
-                                        China
-                                    </p>
-                                </div>
-                                <div className=''>
-                                    <p className='text-[14px] font-medium text-[#D2D5DA]'>
-                                        1,402,112,000
-                                    </p>
-                                </div>
-                                <div className=''>
-                                    <p className='text-[14px] font-medium text-[#D2D5DA]'>
-                                        9,706,961
-                                    </p>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
