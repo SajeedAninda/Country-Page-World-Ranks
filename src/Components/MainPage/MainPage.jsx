@@ -15,21 +15,50 @@ const MainPage = () => {
 
     const [selectedRegions, setSelectedRegions] = useState(initialRegions);
     const [countries, setCountries] = useState([]);
+    const [filteredCountries, setFilteredCountries] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [sortOption, setSortOption] = useState('population');
+    const regions = Object.keys(initialRegions);
 
     useEffect(() => {
         fetch('https://restcountries.com/v3.1/all')
             .then(response => response.json())
-            .then(data => setCountries(data))
+            .then(data => {
+                setCountries(data);
+                setFilteredCountries(data);
+            })
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
-    const regions = Object.keys(initialRegions);
+    useEffect(() => {
+        let filtered = countries.filter((country) => 
+            country.name.common.toLowerCase().includes(searchText.toLowerCase()) ||
+            country.region.toLowerCase().includes(searchText.toLowerCase()) ||
+            (country.subregion && country.subregion.toLowerCase().includes(searchText.toLowerCase()))
+        );
+
+        if (sortOption === 'population') {
+            filtered = filtered.sort((a, b) => b.population - a.population);
+        } else if (sortOption === 'area') {
+            filtered = filtered.sort((a, b) => b.area - a.area);
+        }
+
+        setFilteredCountries(filtered);
+    }, [searchText, sortOption, countries]);
 
     const handleRegionClick = (region) => {
         setSelectedRegions((prev) => ({
             ...prev,
             [region]: !prev[region],
         }));
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
+    const handleSortChange = (e) => {
+        setSortOption(e.target.value);
     };
 
     return (
@@ -39,15 +68,21 @@ const MainPage = () => {
                 <img className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ' src={logo} alt="Logo" />
             </div>
 
-            <div className='lowerDiv min-h-[100vh] bg-[#1C1D1F] flex flex-col'>
+            <div className='lowerDiv pb-20 min-h-[100vh] bg-[#1C1D1F] flex flex-col'>
                 <div className="innerDiv w-[92%] mx-auto h-fit rounded-xl bg-[#1C1D1F] relative p-10 border border-[#282b30] mt-[-5rem]">
                     <div className='text&inputBox flex justify-between items-center'>
                         <p className='text-[#6C727F] font-semibold text-[16px]'>
-                            Found {countries.length} Countries
+                            Found {filteredCountries.length} Countries
                         </p>
 
                         <div className='w-[25%] searchBox relative'>
-                            <input className='w-full pl-10 pr-2 py-2 rounded-lg text-[#6C727F] bg-[#282b30] placeholder:text-[12px] placeholder:text-[#6C727F] placeholder:font-semibold' placeholder='Search by Name, Region or Subregion' type="text" />
+                            <input 
+                                className='w-full pl-10 pr-2 py-2 rounded-lg text-[#6C727F] bg-[#282b30] placeholder:text-[12px] placeholder:text-[#6C727F] placeholder:font-semibold' 
+                                placeholder='Search by Name, Region or Subregion' 
+                                type="text" 
+                                value={searchText} 
+                                onChange={handleSearchChange} 
+                            />
                             <img className='absolute top-2 left-3' src={searchLogo} alt="Search Icon" />
                         </div>
                     </div>
@@ -59,9 +94,15 @@ const MainPage = () => {
                                     Sort By
                                 </label>
                                 <br />
-                                <select className='w-full py-3 px-2 border-2 border-[#282B30] rounded-xl bg-transparent text-[#D2D5DA] mt-2' name="selectBox" id="selectBox">
+                                <select 
+                                    className='w-full py-3 px-2 border-2 border-[#282B30] rounded-xl bg-transparent text-[#D2D5DA] mt-2' 
+                                    name="selectBox" 
+                                    id="selectBox" 
+                                    value={sortOption} 
+                                    onChange={handleSortChange}
+                                >
                                     <option className='bg-[#282B30]' value="area">Area</option>
-                                    <option className='bg-[#282B30]' value="population" selected>Population</option>
+                                    <option className='bg-[#282B30]' value="population">Population</option>
                                 </select>
                             </div>
 
@@ -144,7 +185,7 @@ const MainPage = () => {
 
                             <hr className='my-6 border border-[#3d4149]' />
 
-                            {countries.map((country) => (
+                            {filteredCountries.map((country) => (
                                 <div key={country.cca3} className='countryRow grid items-center grid-cols-4 mt-6'>
                                     <div className='pl-6'>
                                         <div>
