@@ -125,7 +125,10 @@ const MainPage = () => {
                             </div>
 
                             <div className='statusDiv mt-8'>
-                                <div className='checkBoxDiv'>
+                            <p className='text-[#6C727F] font-semibold text-[12px]'>
+                                    Status
+                                </p>
+                                <div className='checkBoxDiv mt-4'>
                                     <div>
                                         <div className='flex items-center'>
                                             <input
