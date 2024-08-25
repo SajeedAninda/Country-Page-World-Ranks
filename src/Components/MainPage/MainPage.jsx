@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import topImg from "../../assets/hero-image-wr.jpg";
 import logo from "../../assets/Logo.svg";
 import searchLogo from "../../assets/Search.svg";
+import chinaFlag from "../../assets/cn.svg"
 
 const MainPage = () => {
     const initialRegions = {
@@ -45,7 +46,7 @@ const MainPage = () => {
                         </div>
                     </div>
 
-                    <div className='mainSegment mt-10'>
+                    <div className='mainSegment mt-10 flex gap-12'>
                         <div className='filteringBox w-[22%]'>
                             <div>
                                 <label className='text-[#6C727F] font-semibold text-[12px]' htmlFor="selectBox">
@@ -110,6 +111,57 @@ const MainPage = () => {
                                 </div>
                             </div>
 
+                        </div>
+
+
+                        <div className="countryBox w-[78%]">
+                            <div className='tableHeader grid items-center grid-cols-4'>
+                                <div className='pl-6'>
+                                    <p className='text-[12px] font-semibold text-[#6C727F]'>
+                                        Flag
+                                    </p>
+                                </div>
+                                <div className=''>
+                                    <p className='text-[12px] font-semibold text-[#6C727F]'>
+                                        Name
+                                    </p>
+                                </div>
+                                <div className=''>
+                                    <p className='text-[12px] font-semibold text-[#6C727F]'>
+                                        Population
+                                    </p>
+                                </div>
+                                <div className=''>
+                                    <p className='text-[12px] font-semibold text-[#6C727F]'>
+                                        Area(km<sup>2</sup>)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <hr className='my-6 border border-[#3d4149]' />
+
+                            <div className='countryRow grid items-center grid-cols-4 mt-6'>
+                                <div className='pl-6'>
+                                    <div>
+                                        <img className='w-[48px] rounded-md object-contain' src={chinaFlag} alt="" />
+                                    </div>
+                                </div>
+                                <div className=''>
+                                    <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                        China
+                                    </p>
+                                </div>
+                                <div className=''>
+                                    <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                        1,402,112,000
+                                    </p>
+                                </div>
+                                <div className=''>
+                                    <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                        9,706,961
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
