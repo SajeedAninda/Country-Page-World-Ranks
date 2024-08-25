@@ -18,6 +18,8 @@ const MainPage = () => {
     const [filteredCountries, setFilteredCountries] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [sortOption, setSortOption] = useState('population');
+    const [isUnMember, setIsUnMember] = useState(false);
+    const [isIndependent, setIsIndependent] = useState(false);
     const regions = Object.keys(initialRegions);
 
     useEffect(() => {
@@ -31,11 +33,18 @@ const MainPage = () => {
     }, []);
 
     useEffect(() => {
-        let filtered = countries.filter((country) => 
-            country.name.common.toLowerCase().includes(searchText.toLowerCase()) ||
-            country.region.toLowerCase().includes(searchText.toLowerCase()) ||
-            (country.subregion && country.subregion.toLowerCase().includes(searchText.toLowerCase()))
-        );
+        let filtered = countries.filter((country) => {
+            const matchesSearchText = 
+                country.name.common.toLowerCase().includes(searchText.toLowerCase()) ||
+                country.region.toLowerCase().includes(searchText.toLowerCase()) ||
+                (country.subregion && country.subregion.toLowerCase().includes(searchText.toLowerCase()));
+
+            const matchesRegion = selectedRegions[country.region];
+            const matchesUnMember = !isUnMember || country.unMember;
+            const matchesIndependent = !isIndependent || country.independent;
+
+            return matchesSearchText && matchesRegion && matchesUnMember && matchesIndependent;
+        });
 
         if (sortOption === 'population') {
             filtered = filtered.sort((a, b) => b.population - a.population);
@@ -44,7 +53,7 @@ const MainPage = () => {
         }
 
         setFilteredCountries(filtered);
-    }, [searchText, sortOption, countries]);
+    }, [searchText, sortOption, countries, selectedRegions, isUnMember, isIndependent]);
 
     const handleRegionClick = (region) => {
         setSelectedRegions((prev) => ({
@@ -59,6 +68,14 @@ const MainPage = () => {
 
     const handleSortChange = (e) => {
         setSortOption(e.target.value);
+    };
+
+    const handleUnMemberChange = () => {
+        setIsUnMember(!isUnMember);
+    };
+
+    const handleIndependentChange = () => {
+        setIsIndependent(!isIndependent);
     };
 
     return (
@@ -125,7 +142,7 @@ const MainPage = () => {
                             </div>
 
                             <div className='statusDiv mt-8'>
-                            <p className='text-[#6C727F] font-semibold text-[12px]'>
+                                <p className='text-[#6C727F] font-semibold text-[12px]'>
                                     Status
                                 </p>
                                 <div className='checkBoxDiv mt-4'>
@@ -135,6 +152,8 @@ const MainPage = () => {
                                                 type="checkbox"
                                                 id="unMember"
                                                 className="appearance-none h-5 w-5 border border-[#6C727F] rounded-sm bg-[#1C1D1F] checked:bg-[#4E80EE] focus:outline-none transition duration-200 cursor-pointer"
+                                                checked={isUnMember}
+                                                onChange={handleUnMemberChange}
                                             />
                                             <label
                                                 htmlFor="unMember"
@@ -149,6 +168,8 @@ const MainPage = () => {
                                                 type="checkbox"
                                                 id="independent"
                                                 className="appearance-none h-5 w-5 border border-[#6C727F] rounded-sm bg-[#1C1D1F] checked:bg-[#4E80EE] focus:outline-none transition duration-200 cursor-pointer"
+                                                checked={isIndependent}
+                                                onChange={handleIndependentChange}
                                             />
                                             <label
                                                 htmlFor="independent"
@@ -191,22 +212,20 @@ const MainPage = () => {
                             {filteredCountries.map((country) => (
                                 <div key={country.cca3} className='countryRow grid items-center grid-cols-4 mt-6'>
                                     <div className='pl-6'>
-                                        <div>
-                                            <img className='w-[48px] rounded-md object-contain' src={country.flags.svg} alt={`${country.name.common} flag`} />
-                                        </div>
+                                        <img className='w-[50px]' src={country.flags.png} alt={`${country.name.common} flag`} />
                                     </div>
                                     <div className=''>
-                                        <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                        <p className='text-[12px] font-semibold text-[#D2D5DA]'>
                                             {country.name.common}
                                         </p>
                                     </div>
                                     <div className=''>
-                                        <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                        <p className='text-[12px] font-semibold text-[#D2D5DA]'>
                                             {country.population.toLocaleString()}
                                         </p>
                                     </div>
                                     <div className=''>
-                                        <p className='text-[14px] font-medium text-[#D2D5DA]'>
+                                        <p className='text-[12px] font-semibold text-[#D2D5DA]'>
                                             {country.area.toLocaleString()}
                                         </p>
                                     </div>
