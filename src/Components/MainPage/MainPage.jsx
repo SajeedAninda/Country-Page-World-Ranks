@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import topImg from "../../assets/hero-image-wr.jpg";
 import logo from "../../assets/Logo.svg";
 import searchLogo from "../../assets/Search.svg";
+import { Link } from 'react-router-dom';
 
 const MainPage = () => {
     const initialRegions = {
@@ -34,7 +35,7 @@ const MainPage = () => {
 
     useEffect(() => {
         let filtered = countries.filter((country) => {
-            const matchesSearchText = 
+            const matchesSearchText =
                 country.name.common.toLowerCase().includes(searchText.toLowerCase()) ||
                 country.region.toLowerCase().includes(searchText.toLowerCase()) ||
                 (country.subregion && country.subregion.toLowerCase().includes(searchText.toLowerCase()));
@@ -93,12 +94,12 @@ const MainPage = () => {
                         </p>
 
                         <div className='w-[25%] searchBox relative'>
-                            <input 
-                                className='w-full pl-10 pr-2 py-2 rounded-lg text-[#6C727F] bg-[#282b30] placeholder:text-[12px] placeholder:text-[#6C727F] placeholder:font-semibold' 
-                                placeholder='Search by Name, Region or Subregion' 
-                                type="text" 
-                                value={searchText} 
-                                onChange={handleSearchChange} 
+                            <input
+                                className='w-full pl-10 pr-2 py-2 rounded-lg text-[#6C727F] bg-[#282b30] placeholder:text-[12px] placeholder:text-[#6C727F] placeholder:font-semibold'
+                                placeholder='Search by Name, Region or Subregion'
+                                type="text"
+                                value={searchText}
+                                onChange={handleSearchChange}
                             />
                             <img className='absolute top-2 left-3' src={searchLogo} alt="Search Icon" />
                         </div>
@@ -111,11 +112,11 @@ const MainPage = () => {
                                     Sort By
                                 </label>
                                 <br />
-                                <select 
-                                    className='w-full py-3 px-2 border-2 border-[#282B30] rounded-xl bg-transparent text-[#D2D5DA] mt-2' 
-                                    name="selectBox" 
-                                    id="selectBox" 
-                                    value={sortOption} 
+                                <select
+                                    className='w-full py-3 px-2 border-2 border-[#282B30] rounded-xl bg-transparent text-[#D2D5DA] mt-2'
+                                    name="selectBox"
+                                    id="selectBox"
+                                    value={sortOption}
                                     onChange={handleSortChange}
                                 >
                                     <option className='bg-[#282B30]' value="area">Area</option>
@@ -210,26 +211,28 @@ const MainPage = () => {
                             <hr className='my-6 border border-[#3d4149]' />
 
                             {filteredCountries.map((country) => (
-                                <div key={country.cca3} className='countryRow grid items-center grid-cols-4 mt-6'>
-                                    <div className='pl-6'>
-                                        <img className='w-[50px]' src={country.flags.png} alt={`${country.name.common} flag`} />
+                                <Link to={`/${country?.name?.official}`}>
+                                    <div key={country.cca3} className='countryRow grid items-center grid-cols-4 mt-6 hover:bg-[#3d4149] transition-colors delay-50' >
+                                        <div className='pl-6'>
+                                            <img className='w-[50px]' src={country.flags.png} alt={`${country.name.common} flag`} />
+                                        </div>
+                                        <div className=''>
+                                            <p className='text-[12px] font-semibold text-[#D2D5DA]'>
+                                                {country.name.common}
+                                            </p>
+                                        </div>
+                                        <div className=''>
+                                            <p className='text-[12px] font-semibold text-[#D2D5DA]'>
+                                                {country.population.toLocaleString()}
+                                            </p>
+                                        </div>
+                                        <div className=''>
+                                            <p className='text-[12px] font-semibold text-[#D2D5DA]'>
+                                                {country.area.toLocaleString()}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div className=''>
-                                        <p className='text-[12px] font-semibold text-[#D2D5DA]'>
-                                            {country.name.common}
-                                        </p>
-                                    </div>
-                                    <div className=''>
-                                        <p className='text-[12px] font-semibold text-[#D2D5DA]'>
-                                            {country.population.toLocaleString()}
-                                        </p>
-                                    </div>
-                                    <div className=''>
-                                        <p className='text-[12px] font-semibold text-[#D2D5DA]'>
-                                            {country.area.toLocaleString()}
-                                        </p>
-                                    </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>

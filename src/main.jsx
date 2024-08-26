@@ -6,11 +6,17 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Details from './Components/CountryDetails/Details.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
+  },
+  {
+    path: "/:name",
+    element: <Details></Details>,
+    loader: ({ params }) => fetch(`https://restcountries.com/v3.1/name/${params.name}`)
   },
 ]);
 
