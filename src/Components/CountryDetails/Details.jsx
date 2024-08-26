@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import topImg from "../../assets/hero-image-wr.jpg";
 import logo from "../../assets/Logo.svg";
 
@@ -11,13 +11,18 @@ const Details = () => {
         const fetchAllCountries = async () => {
             const response = await fetch('https://restcountries.com/v3.1/all');
             const data = await response.json();
-            const neighbors = data.filter(country => 
+            const neighbors = data.filter(country =>
                 countryDetails.borders.includes(country.cca3)
             );
             setNeighboringCountries(neighbors);
         };
         fetchAllCountries();
     }, [countryDetails]);
+
+    const getCountryNameByCca3 = (cca3) => {
+        const country = neighboringCountries?.find(country => country.cca3 === cca3);
+        return country ? country.name.common : cca3;
+    };
 
     return (
         <div>
@@ -101,19 +106,29 @@ const Details = () => {
                     {neighboringCountries.length > 0 && (
                         <div className='neighboring-countries mt-10 px-10'>
                             <div className='text-[#6C727F] text-[16px] font-semibold'>
-                            Neighbouring Countries
+                                Neighbouring Countries
                             </div>
                             <div className='flex justify-start items-center gap-6 mt-2'>
                                 {neighboringCountries?.map((neighbor) => (
-                                    <div key={neighbor.cca3} className='neighbor-country'>
-                                        <img className='w-[80px] h-[48px] object-contain rounded-lg mb-2' src={neighbor.flags.png} alt={neighbor.name.common} />
-                                        <p className='text-[#D2D5DA] text-[16px] text-center font-semibold'>{neighbor.name.common}</p>
+                                    <div key={neighbor?.cca3} className='neighbor-country'>
+                                        <img className='w-[80px] h-[48px] object-contain rounded-lg mb-2' src={neighbor.flags.png} alt={neighbor?.name.common} />
+                                        <Link to={`/${neighbor?.name.official}`}>
+                                            <p className='text-[#D2D5DA] text-[16px] text-center font-semibold hover:underline'>
+                                                {getCountryNameByCca3(neighbor.cca3)}
+                                            </p>
+                                        </Link>
+
                                     </div>
                                 ))}
                             </div>
                         </div>
                     )}
 
+                    <div className='flex justify-center mt-6'>
+                        <Link to={"/"} className='bg-[#282B30] px-5 py-3 rounded-xl text-[#D2D5DA] font-semibold text-[16px] hover:opacity-55'>
+                            Back to Home
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
