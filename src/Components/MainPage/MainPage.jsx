@@ -105,8 +105,8 @@ const MainPage = () => {
                         </div>
                     </div>
 
-                    <div className='mainSegment mt-10 flex-col lg:flex-row gap-12'>
-                        <div className='filteringBox w-full lg:w-[22%] mb-10 lg:mb-0'>
+                    <div className='mainSegment mt-10 flex flex-col lg:flex-row gap-12'>
+                        <div className='filteringBox w-full lg:w-[22%]'>
                             <div>
                                 <label className='text-[#6C727F] font-semibold text-[12px]' htmlFor="selectBox">
                                     Sort By
@@ -187,22 +187,22 @@ const MainPage = () => {
                         <div className="countryBox w-full lg:w-[78%]">
                             <div className='tableHeader grid items-center grid-cols-4'>
                                 <div className='pl-6'>
-                                    <p className='text-[12px] font-semibold text-[#6C727F]'>
+                                    <p className='text-[10px] lg:text-[12px] font-semibold text-[#6C727F]'>
                                         Flag
                                     </p>
                                 </div>
                                 <div className=''>
-                                    <p className='text-[12px] font-semibold text-[#6C727F]'>
+                                    <p className='text-[10px] lg:text-[12px] font-semibold text-[#6C727F]'>
                                         Name
                                     </p>
                                 </div>
                                 <div className=''>
-                                    <p className='text-[12px] font-semibold text-[#6C727F]'>
+                                    <p className='text-[10px] lg:text-[12px] font-semibold text-[#6C727F]'>
                                         Population
                                     </p>
                                 </div>
                                 <div className=''>
-                                    <p className='text-[12px] font-semibold text-[#6C727F]'>
+                                    <p className='text-[10px] lg:text-[12px] font-semibold text-[#6C727F]'>
                                         Area(km<sup>2</sup>)
                                     </p>
                                 </div>
@@ -217,17 +217,17 @@ const MainPage = () => {
                                             <img className='w-[50px]' src={country.flags.png} alt={`${country.name.common} flag`} />
                                         </div>
                                         <div className=''>
-                                            <p className='text-[12px] font-semibold text-[#D2D5DA]'>
+                                            <p className='text-[10px] lg:text-[12px] font-semibold text-[#D2D5DA]'>
                                                 {country.name.common}
                                             </p>
                                         </div>
                                         <div className=''>
-                                            <p className='text-[12px] font-semibold text-[#D2D5DA]'>
+                                            <p className='text-[10px] lg:text-[12px] font-semibold text-[#D2D5DA]'>
                                                 {country.population.toLocaleString()}
                                             </p>
                                         </div>
                                         <div className=''>
-                                            <p className='text-[12px] font-semibold text-[#D2D5DA]'>
+                                            <p className='text-[10px] lg:text-[12px] font-semibold text-[#D2D5DA]'>
                                                 {country.area.toLocaleString()}
                                             </p>
                                         </div>
