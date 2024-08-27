@@ -81,9 +81,9 @@ const MainPage = () => {
 
     return (
         <div>
-            <div className='upperImageDiv relative z-0'>
-                <img className='w-full' src={topImg} alt="Top Image" />
-                <img className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ' src={logo} alt="Logo" />
+            <div className='upperImageDiv  relative z-0'>
+                <img className='w-full h-[50vh] object-cover' src={topImg} alt="Top Image" />
+                <img className=' absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' src={logo} alt="Logo" />
             </div>
 
             <div className='lowerDiv pb-20 min-h-[100vh] bg-[#1C1D1F] flex flex-col'>
