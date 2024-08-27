@@ -27,12 +27,12 @@ const Details = () => {
     return (
         <div>
             <div className='upperImageDiv relative z-0'>
-                <img className='w-full' src={topImg} alt="Top Image" />
+                <img className='w-full h-[50vh] object-cover' src={topImg} alt="Top Image" />
                 <img className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' src={logo} alt="Logo" />
             </div>
 
             <div className='lowerDiv pb-20 min-h-[100vh] bg-[#1C1D1F] flex flex-col'>
-                <div className="innerDiv w-[70%] mx-auto h-fit rounded-xl bg-[#1C1D1F] relative py-10 border border-[#282b30] mt-[-5rem]">
+                <div className="innerDiv lg:w-[70%] mx-auto h-fit rounded-none lg:rounded-xl bg-[#1C1D1F] relative py-10 border border-[#282b30] mt-[-5rem]">
                     <div className='countryImage w-[320px] mx-auto mt-[-5rem]'>
                         <img className='w-full object-contain rounded-lg' src={countryDetails?.flags?.png} alt={countryDetails?.name?.common} />
                     </div>

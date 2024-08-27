@@ -87,15 +87,15 @@ const MainPage = () => {
             </div>
 
             <div className='lowerDiv pb-20 min-h-[100vh] bg-[#1C1D1F] flex flex-col'>
-                <div className="innerDiv w-[92%] mx-auto h-fit rounded-xl bg-[#1C1D1F] relative p-10 border border-[#282b30] mt-[-5rem]">
+                <div className="innerDiv w-full lg:w-[92%] mx-auto h-fit rounded-none lg:rounded-xl bg-[#1C1D1F] relative p-6 lg:p-10 border border-[#282b30] mt-[-5rem]">
                     <div className='text&inputBox flex justify-between items-center'>
-                        <p className='text-[#6C727F] font-semibold text-[16px]'>
+                        <p className='text-[#6C727F] font-semibold text-[14px] lg:text-[16px]'>
                             Found {filteredCountries.length} Countries
                         </p>
 
-                        <div className='w-[25%] searchBox relative'>
+                        <div className='w-[70%] lg:w-[25%] searchBox relative'>
                             <input
-                                className='w-full pl-10 pr-2 py-2 rounded-lg text-[#6C727F] bg-[#282b30] placeholder:text-[12px] placeholder:text-[#6C727F] placeholder:font-semibold'
+                                className='w-full pl-10 pr-2 py-2 rounded-lg text-[#6C727F] bg-[#282b30] placeholder:text-[8px] lg:placeholder:text-[12px] placeholder:text-[#6C727F] placeholder:font-semibold'
                                 placeholder='Search by Name, Region or Subregion'
                                 type="text"
                                 value={searchText}
@@ -105,8 +105,8 @@ const MainPage = () => {
                         </div>
                     </div>
 
-                    <div className='mainSegment mt-10 flex gap-12'>
-                        <div className='filteringBox w-[22%]'>
+                    <div className='mainSegment mt-10 flex-col lg:flex-row gap-12'>
+                        <div className='filteringBox w-full lg:w-[22%] mb-10 lg:mb-0'>
                             <div>
                                 <label className='text-[#6C727F] font-semibold text-[12px]' htmlFor="selectBox">
                                     Sort By
@@ -184,7 +184,7 @@ const MainPage = () => {
                             </div>
                         </div>
 
-                        <div className="countryBox w-[78%]">
+                        <div className="countryBox w-full lg:w-[78%]">
                             <div className='tableHeader grid items-center grid-cols-4'>
                                 <div className='pl-6'>
                                     <p className='text-[12px] font-semibold text-[#6C727F]'>
